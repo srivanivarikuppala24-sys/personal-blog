@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create Post
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-container">
+
+    <h1>
+        Create New Post
+    </h1>
+
+
+    <form method="POST">
+
+        <label for="title">
+            Blog Title
+        </label>
+
+        <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Enter your blog title"
+            required
+        >
+
+
+        <label for="content">
+            Blog Content
+        </label>
+
+        <textarea
+            id="content"
+            name="content"
+            rows="12"
+            placeholder="Write your blog here..."
+            required
+        ></textarea>
+
+
+        <button type="submit">
+            Save Post
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

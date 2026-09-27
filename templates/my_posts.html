@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Posts
+{% endblock %}
+
+
+{% block content %}
+
+<h1 class="page-title">
+    My Posts
+</h1>
+
+
+{% if posts %}
+
+    {% for post in posts %}
+
+        <div class="post-card">
+
+            <h2>
+                {{ post["title"] }}
+            </h2>
+
+            <p class="date">
+                Created on {{ post["created_at"] }}
+            </p>
+
+
+            {% if post["status"] == "published" %}
+
+                <span class="status published-status">
+                    Published
+                </span>
+
+            {% else %}
+
+                <span class="status draft-status">
+                    Draft
+                </span>
+
+            {% endif %}
+
+
+            <div class="actions">
+
+                <a class="button"
+                   href="{{ url_for('view_post', post_id=post['id']) }}">
+                    View
+                </a>
+
+
+                <a class="button"
+                   href="{{ url_for('edit_post', post_id=post['id']) }}">
+                    Edit
+                </a>
+
+
+                {% if post["status"] == "draft" %}
+
+                    <a class="button publish"
+                       href="{{ url_for('publish_post', post_id=post['id']) }}">
+                        Publish
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+
+{% else %}
+
+    <div class="empty">
+
+        <h3>
+            You don't have any posts yet.
+        </h3>
+
+        <p>
+            Create your first blog post.
+        </p>
+
+        <a class="button"
+           href="{{ url_for('create_post') }}">
+            Create Post
+        </a>
+
+    </div>
+
+{% endif %}
+
+{% endblock %}

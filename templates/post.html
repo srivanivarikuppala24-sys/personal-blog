@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ post["title"] }}
+{% endblock %}
+
+
+{% block content %}
+
+<article class="single-post">
+
+    <h1>
+        {{ post["title"] }}
+    </h1>
+
+
+    <p class="date">
+        Created on {{ post["created_at"] }}
+    </p>
+
+
+    {% if post["status"] == "published" %}
+
+        <span class="status published-status">
+            Published
+        </span>
+
+    {% else %}
+
+        <span class="status draft-status">
+            Draft
+        </span>
+
+    {% endif %}
+
+
+    <div class="post-content">
+        {{ post["content"] }}
+    </div>
+
+
+    <div class="actions">
+
+        <a class="button"
+           href="{{ url_for('edit_post', post_id=post['id']) }}">
+            Edit Post
+        </a>
+
+
+        {% if post["status"] == "draft" %}
+
+            <a class="button publish"
+               href="{{ url_for('publish_post', post_id=post['id']) }}">
+                Publish Post
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</article>
+
+{% endblock %}
