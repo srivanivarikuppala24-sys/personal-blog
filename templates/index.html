@@ -1,85 +1,66 @@
 {% extends "base.html" %}
 
-{% block title %}
-Home - My Personal Blog
-{% endblock %}
-
+{% block title %}Home - My Personal Blog{% endblock %}
 
 {% block content %}
 
 <section class="hero">
-
-    <h1>
-        Welcome to My Personal Blog
-    </h1>
+    <h2>Welcome to My Personal Blog</h2>
 
     <p>
         Read my latest thoughts, experiences and stories.
     </p>
 
-    <a class="button"
-       href="{{ url_for('create_post') }}">
+    <a href="{{ url_for('create') }}" class="button">
         Create New Post
     </a>
-
 </section>
 
+<section class="posts">
 
-<h2 class="section-title">
-    Published Posts
-</h2>
+    {% if posts %}
 
+        {% for post in posts %}
 
-{% if posts %}
+            <article class="post-card">
 
-    {% for post in posts %}
+                <h2>{{ post["title"] }}</h2>
 
-        <div class="post-card">
+                <p class="date">
+                    Published on {{ post["created_at"] }}
+                </p>
 
-            <h2>
-                {{ post["title"] }}
-            </h2>
+                <p>
+                    {{ post["content"][:200] }}
+                    {% if post["content"]|length > 200 %}
+                        ...
+                    {% endif %}
+                </p>
 
-            <p class="date">
-                Published on {{ post["created_at"] }}
-            </p>
+                <a href="{{ url_for('view_post', post_id=post['id']) }}">
+                    Read More
+                </a>
+
+            </article>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            <h2>No published posts yet</h2>
 
             <p>
-                {{ post["content"][:200] }}
-
-                {% if post["content"]|length > 200 %}
-                    ...
-                {% endif %}
+                Create your first blog post and publish it!
             </p>
 
-            <a href="{{ url_for('view_post', post_id=post['id']) }}">
-                Read More →
+            <a href="{{ url_for('create') }}" class="button">
+                Create Your First Post
             </a>
-
         </div>
 
-    {% endfor %}
+    {% endif %}
 
-
-{% else %}
-
-    <div class="empty">
-
-        <h3>
-            No published posts yet.
-        </h3>
-
-        <p>
-            Create and publish your first blog post.
-        </p>
-
-        <a class="button"
-           href="{{ url_for('create_post') }}">
-            Create Post
-        </a>
-
-    </div>
-
-{% endif %}
+</section>
 
 {% endblock %}
