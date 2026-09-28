@@ -59,7 +59,7 @@ My Posts
                 {% if post["status"] == "draft" %}
 
                     <a class="button publish"
-                       href="{{ url_for('publish_post', post_id=post['id']) }}">
+                       href="{{ url_for('publish', post_id=post['id']) }}">
                         Publish
                     </a>
 
